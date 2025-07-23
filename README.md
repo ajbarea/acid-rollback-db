@@ -1,10 +1,6 @@
 # 🗄️ ACID Rollback Database
 
-A modular, thread-safe database showcasing **availability tactics** via ACID **transactions** for fault prevention and **rollback** mechanisms for fault recovery, ensuring high availab---
-
-## 📖 Reference
-
-Bass, L., Clements, P., & Kazman, R. (2021). *Software Architecture in Practice* (4th ed.). Pearson Technology Group. <https://akademos.vitalsource.com/books/9780136886020> and data integrity. 💾✨
+A modular, thread-safe database showcasing **availability tactics** via ACID **transactions** for fault prevention and **rollback** mechanisms for fault recovery, ensuring high availability and data integrity.
 
 ---
 
@@ -13,7 +9,6 @@ Bass, L., Clements, P., & Kazman, R. (2021). *Software Architecture in Practice*
 This project implements two key availability tactics from software architecture patterns:
 
 ### 🔄 **Fault Recovery: Rollback Tactic**
-
 *"A rollback permits the system to revert to a previous known good state upon the detection of a failure"*
 
 - **Checkpoint Management**: Automatic snapshots at transaction boundaries and configurable intervals
@@ -22,7 +17,6 @@ This project implements two key availability tactics from software architecture 
 - **State Preservation**: Deep-copy state preservation for clean recovery points
 
 ### 🛡️ **Fault Prevention: Transactions Tactic**
-
 *"Systems targeting high-availability services leverage transactional semantics to ensure ACID properties"*
 
 - **Two-Phase Commit Protocol**: Prevents race conditions through prepare and commit phases
@@ -46,11 +40,10 @@ docs/                      # 📚 Additional guides
 ```
 
 **🎯 Separation of Concerns:**
-
-- `CheckpointManager` handles rollback logic 🔄
-- `TransactionManager` enforces ACID semantics ⚡
-- `Database` integrates both for fault tolerance 🛡️
-- `InventoryOperations` encapsulates business rules 📋
+- `CheckpointManager` handles rollback logic
+- `TransactionManager` enforces ACID semantics
+- `Database` integrates both for fault tolerance
+- `InventoryOperations` encapsulates business rules
 
 **✅ Testable & Modular:** Each component can be independently verified under fault scenarios.
 
@@ -66,10 +59,10 @@ db = AcidRollbackDB(
     max_checkpoints=50       # retain up to 50 recovery points
 )
 
-# Begin a transaction
+# Begin a transaction 🛒
 txn = db.begin_transaction()
 
-# Perform operations 🛒
+# Perform operations
 db.put(txn, "MILK-2PCT-1GAL", {...})
 db.put(txn, "BREAD-WHITE-LOAF", {...})
 
@@ -88,7 +81,6 @@ db.print_status()
 ## 📋 Common Usage Patterns
 
 ### 🛍️ Safe Sale Processing
-
 ```python
 txn = db.begin_transaction()
 try:
@@ -100,7 +92,6 @@ except Exception:
 ```
 
 ### 🔧 System Recovery
-
 ```python
 db.simulate_fault()             # auto-rollback to last checkpoint
 db.rollback_to_checkpoint(0)    # rollback to opening baseline
@@ -222,4 +213,4 @@ print(f"Active transactions: {status['active_transactions']}")
 
 ## Reference
 
-Bass, L., Clements, P., & Kazman, R. (2021). *Software Architecture in Practice* (4th ed.). Pearson Technology Group. <https://akademos.vitalsource.com/books/9780136886020>
+Bass, L., Clements, P., & Kazman, R. (2021). *Software Architecture in Practice* (4th ed.). Pearson Technology Group. <https://akademos.vitalsource.com/books/9780136886020> 💾✨
