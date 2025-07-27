@@ -213,6 +213,9 @@ A chaos proxy injection is included in this project to simulate random failures 
 python -m chaos.chaos_runner
 ```
 
+**Example of Chaos Results**
+![chaos_example.png](./images/chaos_example.png)
+
 This runs a stress loop of random transactions, injecting chaos per configured parameters, and printing logs and final database state.
 
 ---
