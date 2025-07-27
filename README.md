@@ -54,6 +54,42 @@ docs/                      # 📚 Additional guides
 - `Database` integrates both for fault tolerance
 - `InventoryOperations` encapsulates business rules
 
+**High Level Architecture Diagram**
+```mermaid
+%%{init: {'theme': 'default', 'themeVariables': { 'lineColor': '#FFD700' }}}%%
+flowchart TD
+ subgraph subGraph0["Core Database System"]
+        InventoryOps["inventory_operations.py
+        Domain Logic"]
+        Database["database.py
+        Tactics Orchestrator"]
+        TxnManager["transaction_manager.py
+        Transaction Control"]
+        CheckpointMgr["checkpoint_manager.py
+        Recovery Management"]
+        TxnModel["transaction.py
+        Transaction Model"]
+        CheckpointModel["checkpoint.py
+        Checkpoint Model"]
+  end
+ subgraph subGraph1["Chaos Layer"]
+        ChaosRunner["chaos_runner.py
+        Chaos Stress Test Driver"]
+        ChaosProxy["chaos_proxy.py
+        Chaos Injection Proxy"]
+        ChaosConfig["chaos_config.py
+        Chaos Behavior Config"]
+        ChaosException["chaos_exception.py
+        Custom Chaos Exception"]
+  end
+    InventoryOps --> Database
+    Database --> TxnManager & CheckpointMgr
+    TxnManager --> TxnModel
+    CheckpointMgr --> CheckpointModel
+    ChaosRunner --> ChaosProxy
+    ChaosProxy --> ChaosConfig & ChaosException & Database
+```
+
 **✅ Testable & Modular:** Each component can be independently verified under fault scenarios.
 
 ---
