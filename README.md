@@ -23,6 +23,15 @@ This project implements two key availability tactics from software architecture 
 - **ACID Compliance**: Atomic, consistent, isolated, durable operations with thread-safe concurrency control
 - **Validation Gates**: Pre-commit validation to prevent invalid state transitions
 
+### 🧪 **Chaos Testing & Fault Injection**  
+*"Ensuring robustness through controlled fault simulation"*
+
+- Implements a **Chaos Injection Proxy** that wraps the core database instance to intercept and inject chaos into key operations (`put`, `delete`, `begin_transaction`, `commit`, `rollback`).
+- Using a **proxy pattern** allows chaos injection without modifying the original database code, preserving separation of concerns and making it easy to enable or disable chaos dynamically.
+- The proxy introduces configurable **random failures** and **delays** based on set probabilities, simulating real-world faults such as network latency, unexpected errors, or resource contention.
+- This approach enables comprehensive testing of the database’s **ACID guarantees** and rollback mechanisms under unpredictable conditions, helping to uncover subtle bugs and improve fault tolerance.
+- Includes a **Chaos Runner** utility that automates stress testing by running randomized transactions with chaos injection, validating system stability over time.
+
 ## 📐 Architecture Overview
 
 ```
@@ -185,6 +194,26 @@ db.rollback_to_checkpoint(0)          # Rollback to baseline
 status = db.get_system_status()
 print(f"Active transactions: {status['active_transactions']}")
 ```
+
+---
+### Chaos Testing & Fault Injection
+
+A chaos proxy injection is included in this project to simulate random failures and delays in database operations. This helps validate the correctness of ACID transactions and rollback mechanisms under fault conditions.
+
+**Chaos Features:**
+
+- Configurable failure rate to randomly throw exceptions during operations like `put`, `delete`, `begin_transaction`, `commit`, and `rollback`.
+- Configurable delay injection to simulate slow operations and timing variability.
+- Realistic fault scenarios that test your system’s fault recovery and transactional integrity.
+- Collects metrics on failures, delays, and total delay time to analyze system resilience.
+
+**How to run Chaos Runner:**
+
+```
+python -m chaos.chaos_runner
+```
+
+This runs a stress loop of random transactions, injecting chaos per configured parameters, and printing logs and final database state.
 
 ---
 
