@@ -56,7 +56,7 @@ docs/                      # 📚 Additional guides
 
 **High Level Architecture Diagram**
 ```mermaid
-%%{init: {'theme': 'default', 'themeVariables': { 'lineColor': '#FFD700' }}}%%
+%%{init: {'theme': 'default'}}%%
 flowchart TD
  subgraph subGraph0["Core Database System"]
         InventoryOps["inventory_operations.py
