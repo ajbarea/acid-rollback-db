@@ -105,6 +105,28 @@ except Exception:
 db.simulate_fault()             # auto-rollback to last checkpoint
 db.rollback_to_checkpoint(0)    # rollback to opening baseline
 ```
+---
+### Chaos Testing & Fault Injection
+
+A chaos proxy injection is included in this project to simulate random failures and delays in database operations. This helps validate the correctness of ACID transactions and rollback mechanisms under fault conditions.
+
+**Chaos Features:**
+
+- Configurable failure rate to randomly throw exceptions during operations like `put`, `delete`, `begin_transaction`, `commit`, and `rollback`.
+- Configurable delay injection to simulate slow operations and timing variability.
+- Realistic fault scenarios that test your system’s fault recovery and transactional integrity.
+- Collects metrics on failures, delays, and total delay time to analyze system resilience.
+
+**How to run Chaos Runner:**
+
+```
+python -m chaos.chaos_runner
+```
+
+**Example of Chaos Results**
+![chaos_example.png](./images/chaos_example.png)
+
+This runs a stress loop of random transactions, injecting chaos per configured parameters, and printing logs and final database state.
 
 ---
 
@@ -194,29 +216,6 @@ db.rollback_to_checkpoint(0)          # Rollback to baseline
 status = db.get_system_status()
 print(f"Active transactions: {status['active_transactions']}")
 ```
-
----
-### Chaos Testing & Fault Injection
-
-A chaos proxy injection is included in this project to simulate random failures and delays in database operations. This helps validate the correctness of ACID transactions and rollback mechanisms under fault conditions.
-
-**Chaos Features:**
-
-- Configurable failure rate to randomly throw exceptions during operations like `put`, `delete`, `begin_transaction`, `commit`, and `rollback`.
-- Configurable delay injection to simulate slow operations and timing variability.
-- Realistic fault scenarios that test your system’s fault recovery and transactional integrity.
-- Collects metrics on failures, delays, and total delay time to analyze system resilience.
-
-**How to run Chaos Runner:**
-
-```
-python -m chaos.chaos_runner
-```
-
-**Example of Chaos Results**
-![chaos_example.png](./images/chaos_example.png)
-
-This runs a stress loop of random transactions, injecting chaos per configured parameters, and printing logs and final database state.
 
 ---
 
